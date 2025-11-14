@@ -126,6 +126,18 @@ function displayResults(scores) {
     // Add animation effect
     resultsSection.classList.add('fade-in');
     
+    try {
+        const analysis = generateAnalysis({
+            rwScaled: scores.rwScaled,
+            mathScaled: scores.mathScaled,
+            total: scores.total
+        });
+        renderAnalysis(analysis);
+    } catch (e) {
+        const section = document.getElementById('analysisSection');
+        if (section) section.style.display = 'none';
+    }
+
     // Scroll to results
     resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -209,3 +221,106 @@ function initializeCalculator() {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeCalculator);
+
+function generateAnalysis(scores) {
+    const level = scores.total < 900 ? 'basic' : scores.total < 1200 ? 'advanced' : scores.total < 1400 ? 'intensive' : 'elite';
+    const levelText = { basic: '基础', advanced: '进阶', intensive: '强化', elite: '冲刺' }[level];
+    const rwBand = scores.rwScaled < 450 ? 'basic' : scores.rwScaled < 600 ? 'advanced' : scores.rwScaled < 700 ? 'intensive' : 'elite';
+    const mathBand = scores.mathScaled < 450 ? 'basic' : scores.mathScaled < 600 ? 'advanced' : scores.mathScaled < 700 ? 'intensive' : 'elite';
+
+    const rwMap = {
+        basic: [
+            '高频错因：词汇与句法基础薄弱，主旨与细节定位不稳',
+            '先做字面信息定位题，分句断句，关注连接词提示',
+            '图表题先读坐标/单位，再读题干，不要先看选项'
+        ],
+        advanced: [
+            '长难句断句与指代关系是主要丢分点',
+            '修辞与逻辑一致性题需核对上下文语气与指向',
+            '图表题先定结论方向，再匹配证据'
+        ],
+        intensive: [
+            '时间管理：先易后难，标记回看，避免在干扰项上久耗',
+            '同义替换陷阱：语义范围扩大/缩小、过度绝对化',
+            '排除法优先，逐条证伪比直接找“对的”更稳'
+        ],
+        elite: [
+            '风格一致性与语法边界题是边际提分关键',
+            '对比项细微差异（措辞强弱、指向范围）决定选项胜负',
+            '保持节奏与准确率，不为少数极难题打乱时间'
+        ]
+    };
+
+    const mathMap = {
+        basic: [
+            '代数基础与比例/单位换算是主要丢分点',
+            '列式规范化：定义未知量→建立等式→检查量纲',
+            '计算完成做一次符号与单位复查'
+        ],
+        advanced: [
+            '二次函数与方程组、指数与根式题需建立“标准模板”',
+            '基础概率统计：样本空间与条件限定是关键',
+            '文字题先画关系草图再列式'
+        ],
+        intensive: [
+            '函数图像/变换与参数题提升性价比高',
+            '多步应用题拆解阶段与中间量，逐步代回',
+            '检验策略：代入边界值/特殊值快速验算'
+        ],
+        elite: [
+            '复杂函数性质与参数联立题，先定单调/对称/范围',
+            '估算与上界下界思维可替代繁琐运算',
+            '保持速算与准确率平衡，必要时放弃极端难题'
+        ]
+    };
+
+    const adviceByLevel = {
+        basic: [
+            '制作错题本：记录题型→错因→改进法，每题写出“错误触发点”',
+            '分项每日 30–45 分钟，RW 先做定位题，Math 先做代数与比例',
+            '每周 1 套整卷，训练 65/70 分钟节奏与转场'
+        ],
+        advanced: [
+            '精炼易错清单：各分项各 10 题，集中连做与归纳',
+            '提升读图与单位换算速度，建立固定流程',
+            '做题后 10 分钟复盘：定位→证据→排除链条是否完整'
+        ],
+        intensive: [
+            '两天一套模拟，严格计时；固定答题顺序与跳题策略',
+            '针对 2–3 个丢分点做 20 题微训练，形成肌肉记忆',
+            '形成检查清单：单位/符号/边界/特殊值'
+        ],
+        elite: [
+            '锁定最后 3–5 分的丢分点，针对性微训练 20–30 题',
+            '考前 7 天维持节奏，避免大幅调整题量与作息',
+            '保持准确率优先的节奏管理，不被极难题干扰'
+        ]
+    };
+
+    return {
+        level,
+        levelText,
+        rw: rwMap[rwBand],
+        math: mathMap[mathBand],
+        advice: adviceByLevel[level]
+    };
+}
+
+function renderAnalysis(analysis) {
+    const section = document.getElementById('analysisSection');
+    if (!section) return;
+    const badge = document.getElementById('levelBadge');
+    const rwList = document.getElementById('rwAnalysis');
+    const mathList = document.getElementById('mathAnalysis');
+    const adviceList = document.getElementById('adviceList');
+
+    badge.textContent = `${analysis.levelText}分档`;
+    badge.className = `badge ${analysis.level}`;
+
+    rwList.innerHTML = analysis.rw.map(t => `<li>${t}</li>`).join('');
+    mathList.innerHTML = analysis.math.map(t => `<li>${t}</li>`).join('');
+    adviceList.innerHTML = analysis.advice.map(t => `<li>${t}</li>`).join('');
+
+    section.style.display = 'block';
+    section.classList.add('fade-in');
+}
