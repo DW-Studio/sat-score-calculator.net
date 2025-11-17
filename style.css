@@ -789,16 +789,26 @@ html, body { overflow-x: hidden; }
     }
 
     .results-grid { grid-template-columns: 1fr; }
-    .filters-bar { grid-template-columns: 1fr; }
+    .filters-bar { grid-template-columns: 1fr; width: 100%; }
+    .schools-section { padding: var(--spacing-md); max-width: 100%; overflow: hidden; }
     .instructions-section { display: none; }
     .score-breakdown { display: none; }
     .analysis-card .analysis-grid { display: none; }
     .analysis-card .advice { display: none; }
     .school-header { flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-xs); }
     .school-name { flex: 1 1 100%; white-space: normal; line-height: 1.4; font-size: var(--font-size-base); }
-    .school-card { overflow: hidden; }
+    .school-card { overflow: hidden; max-width: 100%; }
     .school-header .chip { margin-top: var(--spacing-xs); }
     .school-meta .chip.country { display: none; }
+    .school-header, .school-meta { width: 100%; }
+    .score-control .score-inputs { grid-template-columns: 1fr; row-gap: var(--spacing-sm); }
+    .filter-item input[type="text"],
+    .filter-item input[type="number"],
+    .filter-item select { width: 100%; min-width: 0; }
+    #schoolScoreRange { width: 100%; }
+    .stat { font-size: var(--font-size-xs); }
+    .chip { font-size: var(--font-size-xs); }
+    .recommend { grid-template-columns: 80px 1fr; }
 }
 
 /* Print Styles */
