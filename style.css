@@ -74,6 +74,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+html, body { overflow-x: hidden; }
+
 /* Container */
 .container {
     min-height: 100vh;
@@ -522,6 +524,8 @@ body {
     font-weight: 700;
     color: var(--text-primary);
     text-decoration: none;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .school-name:hover { color: var(--primary-color); }
@@ -783,6 +787,13 @@ body {
         padding: var(--spacing-md) var(--spacing-lg);
         font-size: var(--font-size-base);
     }
+
+    .results-grid { grid-template-columns: 1fr; }
+    .filters-bar { grid-template-columns: 1fr; }
+    .instructions-section { display: none; }
+    .score-breakdown { display: none; }
+    .analysis-card .analysis-grid { display: none; }
+    .analysis-card .advice { display: none; }
 }
 
 /* Print Styles */
