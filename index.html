@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAT Score Calculator - Convert Raw Scores to Scaled Scores</title>
-    <meta name="description" content="Calculate your SAT scores accurately. Convert raw scores from Reading & Writing and Math sections to scaled scores (200-800) and get your total SAT score (400-1600).">
+    <title>SAT Score Calculator & College Finder – Convert Raw to Scaled</title>
+    <meta name="description" content="Accurately convert SAT raw scores to scaled scores (200–800; 400–1600 total) and get college recommendations by score, region, type, and admission rate.">
+    <link rel="canonical" href="https://www.sat-score-calculator.net/">
+    <link rel="alternate" hreflang="en" href="https://www.sat-score-calculator.net/">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="SAT Score Calculator & College Finder">
+    <meta property="og:description" content="Convert SAT raw to scaled scores and find colleges by score, region, type, and admission rate.">
+    <meta property="og:url" content="https://www.sat-score-calculator.net/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.sat-score-calculator.net/favicon.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SAT Score Calculator & College Finder">
+    <meta name="twitter:description" content="Convert SAT raw to scaled scores and find colleges by score, region, type, and admission rate.">
+    <meta name="twitter:image" content="https://www.sat-score-calculator.net/favicon.svg">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -119,6 +131,59 @@
                             <ul id="adviceList"></ul>
                         </div>
                     </div>
+
+                    <section class="schools-section" id="schoolsSection" style="display: none;">
+                        <div class="schools-header">
+                            <h3>College Finder & Recommendations</h3>
+                            <span id="schoolsLevelBadge" class="badge">--</span>
+                        </div>
+                        <div class="filters-bar" id="schoolFilters">
+                            <div class="filter-item score-control">
+                                <label for="schoolScoreInput">Total Score</label>
+                                <div class="score-inputs">
+                                    <input type="number" id="schoolScoreInput" min="400" max="1600" step="10" placeholder="400-1600">
+                                    <input type="range" id="schoolScoreRange" min="400" max="1600" step="10">
+                                    <span class="score-display" id="schoolScoreDisplay">--</span>
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <label for="schoolCountrySelect">Region</label>
+                                <select id="schoolCountrySelect">
+                                    <option value="all">All</option>
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="Other">Other Regions</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <label for="schoolTypeSelect">Type</label>
+                                <select id="schoolTypeSelect">
+                                    <option value="all">All</option>
+                                    <option value="Public">Public</option>
+                                    <option value="Private">Private</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <label for="admitRateSelect">Admission Rate</label>
+                                <select id="admitRateSelect">
+                                    <option value="all">All</option>
+                                    <option value="0-10">0–10%</option>
+                                    <option value="10-20">10–20%</option>
+                                    <option value="20-40">20–40%</option>
+                                    <option value="40-60">40–60%</option>
+                                    <option value="60-80">60–80%</option>
+                                    <option value="80-100">80–100%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="schools-stats" id="schoolsStats"></div>
+                        <div class="results-grid" id="schoolResults"></div>
+                        <div class="load-more">
+                            <button id="schoolLoadMore" class="calculate-button">Load More</button>
+                        </div>
+                    </section>
                 </div>
             </section>
 
@@ -161,6 +226,21 @@
         </footer>
     </div>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://www.sat-score-calculator.net/#website",
+      "url": "https://www.sat-score-calculator.net/",
+      "name": "SAT Score Calculator & College Finder",
+      "description": "Convert SAT raw to scaled scores and find colleges by score, region, type, and admission rate.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "SAT Score Calculator",
+        "url": "https://www.sat-score-calculator.net/"
+      }
+    }
+    </script>
     <script src="script.js"></script>
     <div style="display: none;">
         <!-- Google tag (gtag.js) -->

@@ -439,6 +439,203 @@ body {
     padding: var(--spacing-2xl);
 }
 
+.schools-section {
+    margin-top: var(--spacing-2xl);
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.schools-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+}
+
+.filters-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.filter-item label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.filter-item input[type="text"],
+.filter-item input[type="number"],
+.filter-item select {
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    background: var(--card-background);
+}
+
+.score-control .score-inputs {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.score-display {
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: right;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.school-card {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background: var(--background-color);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.school-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.school-name {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.school-name:hover { color: var(--primary-color); }
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    line-height: 1;
+    border: 1px solid transparent;
+}
+
+.chip.public { color: #1d4ed8; background: #dbeafe; border-color: #bfdbfe; }
+.chip.private { color: #0f766e; background: #d1fae5; border-color: #a7f3d0; }
+.chip.country { color: #374151; background: #f3f4f6; border-color: #e5e7eb; }
+.chip.tag.fit { color: #15803d; background: #dcfce7; border-color: #bbf7d0; }
+.chip.tag.safety { color: #1d4ed8; background: #dbeafe; border-color: #bfdbfe; }
+.chip.tag.reach { color: #b91c1c; background: #fee2e2; border-color: #fecaca; }
+
+.chip.tag {
+    height: 24px;
+    min-width: 64px;
+    padding: 0 0.6rem;
+    justify-content: center;
+}
+
+.school-header .chip { margin-left: var(--spacing-sm); }
+.school-meta .chip { margin-right: var(--spacing-sm); }
+
+.school-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.no-results {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: var(--spacing-xl);
+}
+
+.school-meta {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.stat {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.recommend {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.recommend-meter {
+    position: relative;
+    height: 8px;
+    background: var(--border-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.recommend-meter.fit { background: #d1fae5; }
+.recommend-meter.safety { background: #dbeafe; }
+.recommend-meter.reach { background: #fee2e2; }
+
+.recommend-fill {
+    height: 100%;
+    background: var(--accent-color);
+}
+.recommend-meter.safety .recommend-fill { background: var(--primary-light); }
+.recommend-meter.reach .recommend-fill { background: #ef4444; }
+
+.group-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+}
+
+.group-title {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.school-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-link:hover { text-decoration: underline; }
+
+.load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+}
+
 .analysis-header {
     display: flex;
     justify-content: flex-start;
@@ -492,6 +689,7 @@ body {
 @media (max-width: 768px) {
     .analysis-card { padding: var(--spacing-lg); }
     .analysis-grid { grid-template-columns: 1fr; }
+    .score-control .score-inputs { grid-template-columns: 120px 1fr 60px; }
 }
 
 /* Responsive Design */

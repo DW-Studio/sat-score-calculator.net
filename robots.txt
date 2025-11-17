@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.sat-score-calculator.net/sitemap.xml
