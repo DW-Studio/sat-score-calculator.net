@@ -794,6 +794,11 @@ html, body { overflow-x: hidden; }
     .score-breakdown { display: none; }
     .analysis-card .analysis-grid { display: none; }
     .analysis-card .advice { display: none; }
+    .school-header { flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-xs); }
+    .school-name { flex: 1 1 100%; white-space: normal; line-height: 1.4; font-size: var(--font-size-base); }
+    .school-card { overflow: hidden; }
+    .school-header .chip { margin-top: var(--spacing-xs); }
+    .school-meta .chip.country { display: none; }
 }
 
 /* Print Styles */
