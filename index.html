@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAT Score Calculator & College Finder – Convert Raw to Scaled</title>
-    <meta name="description" content="Accurately convert SAT raw scores to scaled scores (200–800; 400–1600 total) and get college recommendations by score, region, type, and admission rate.">
+    <meta name="description"
+        content="Accurately convert SAT raw scores to scaled scores (200–800; 400–1600 total) and get college recommendations by score, type, and admission rate.">
     <link rel="canonical" href="https://www.sat-score-calculator.net/">
     <link rel="alternate" hreflang="en" href="https://www.sat-score-calculator.net/">
     <meta name="robots" content="index,follow">
-    <meta property="og:title" content="SAT Score Calculator & College Finder">
-    <meta property="og:description" content="Convert SAT raw to scaled scores and find colleges by score, region, type, and admission rate.">
-    <meta property="og:url" content="https://www.sat-score-calculator.net/">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://www.sat-score-calculator.net/favicon.svg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SAT Score Calculator & College Finder">
-    <meta name="twitter:description" content="Convert SAT raw to scaled scores and find colleges by score, region, type, and admission rate.">
-    <meta name="twitter:image" content="https://www.sat-score-calculator.net/favicon.svg">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -31,67 +25,41 @@
             <section class="calculator-section">
                 <div class="calculator-card">
                     <h2 class="section-title">Enter Your Raw Scores</h2>
-                    <p class="section-description">Input your raw scores from the Reading & Writing and Math sections to get your scaled scores.</p>
-                    
+                    <p class="section-description">Input your raw scores from the Reading & Writing and Math sections to
+                        get your scaled scores.</p>
+
                     <form class="calculator-form" id="satCalculator">
                         <div class="input-group">
                             <label for="readingWritingScore" class="input-label">
-                                Reading & Writing Raw Score
-                                <span class="score-range">(0-52)</span>
+                                Reading & Writing Raw Score <span class="score-range">(0-52)</span>
                             </label>
-                            <input 
-                                type="number" 
-                                id="readingWritingScore" 
-                                class="score-input" 
-                                min="0" 
-                                max="52" 
-                                placeholder="Enter 0-52"
-                                required
-                                aria-describedby="rw-help"
-                            >
-                            <span id="rw-help" class="input-help">Number of correct answers in Reading & Writing section</span>
+                            <input type="number" id="readingWritingScore" class="score-input" min="0" max="52"
+                                placeholder="Enter 0-52" required>
                         </div>
-
                         <div class="input-group">
                             <label for="mathScore" class="input-label">
-                                Math Raw Score
-                                <span class="score-range">(0-58)</span>
+                                Math Raw Score <span class="score-range">(0-58)</span>
                             </label>
-                            <input 
-                                type="number" 
-                                id="mathScore" 
-                                class="score-input" 
-                                min="0" 
-                                max="58" 
-                                placeholder="Enter 0-58"
-                                required
-                                aria-describedby="math-help"
-                            >
-                            <span id="math-help" class="input-help">Number of correct answers in Math section</span>
+                            <input type="number" id="mathScore" class="score-input" min="0" max="58"
+                                placeholder="Enter 0-58" required>
                         </div>
-
-                        <button type="submit" class="calculate-button">
-                            Calculate SAT Score
-                        </button>
+                        <button type="submit" class="calculate-button">Calculate SAT Score</button>
                     </form>
                 </div>
 
                 <div class="results-card" id="resultsSection" style="display: none;">
                     <h2 class="section-title">Your SAT Scores</h2>
-                    
                     <div class="score-results">
                         <div class="score-item">
                             <div class="score-label">Reading & Writing</div>
                             <div class="score-value" id="rwScaledScore">--</div>
                             <div class="score-range-text">Scaled Score (200-800)</div>
                         </div>
-
                         <div class="score-item">
                             <div class="score-label">Math</div>
                             <div class="score-value" id="mathScaledScore">--</div>
                             <div class="score-range-text">Scaled Score (200-800)</div>
                         </div>
-
                         <div class="score-item total-score">
                             <div class="score-label">Total SAT Score</div>
                             <div class="score-value" id="totalScore">--</div>
@@ -99,23 +67,9 @@
                         </div>
                     </div>
 
-                    <div class="score-breakdown">
-                        <h3>Score Breakdown</h3>
-                        <div class="breakdown-item">
-                            <span>Reading & Writing Raw:</span>
-                            <span id="rwRawScore">--</span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span>Math Raw:</span>
-                            <span id="mathRawScore">--</span>
-                        </div>
-                    </div>
-
                     <div class="analysis-card" id="analysisSection" style="display: none;">
                         <h3>Score Analysis & Advice</h3>
-                        <div class="analysis-header">
-                            <span id="levelBadge" class="badge">--</span>
-                        </div>
+                        <div class="analysis-header"><span id="levelBadge" class="badge">--</span></div>
                         <div class="analysis-grid">
                             <div class="analysis-col">
                                 <h4>Reading & Writing Analysis</h4>
@@ -141,21 +95,11 @@
                             <div class="filter-item score-control">
                                 <label for="schoolScoreInput">Total Score</label>
                                 <div class="score-inputs">
-                                    <input type="number" id="schoolScoreInput" min="400" max="1600" step="10" placeholder="400-1600">
+                                    <input type="number" id="schoolScoreInput" min="400" max="1600" step="10"
+                                        placeholder="400-1600">
                                     <input type="range" id="schoolScoreRange" min="400" max="1600" step="10">
                                     <span class="score-display" id="schoolScoreDisplay">--</span>
                                 </div>
-                            </div>
-                            <div class="filter-item">
-                                <label for="schoolCountrySelect">Region</label>
-                                <select id="schoolCountrySelect">
-                                    <option value="all">All</option>
-                                    <option value="US">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="AU">Australia</option>
-                                    <option value="Other">Other Regions</option>
-                                </select>
                             </div>
                             <div class="filter-item">
                                 <label for="schoolTypeSelect">Type</label>
@@ -186,72 +130,33 @@
                     </section>
                 </div>
             </section>
-
-            <section class="instructions-section">
-                <h2 class="section-title">How to Use This Calculator</h2>
-                <div class="instructions-content">
-                    <div class="instruction-item">
-                        <h3>1. Find Your Raw Scores</h3>
-                        <p>Check your SAT practice test or official score report for the number of questions you answered correctly in each section.</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h3>2. Enter Your Scores</h3>
-                        <p>Input your raw scores in the calculator above. Reading & Writing has 52 questions, Math has 58 questions.</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h3>3. Get Your Results</h3>
-                        <p>Click "Calculate SAT Score" to see your scaled scores and total SAT score based on official College Board conversion tables.</p>
-                    </div>
-                </div>
-            </section>
         </main>
 
         <footer class="footer">
             <div class="footer-content">
-                <div class="disclaimer">
-                    <h3>Disclaimer</h3>
-                    <p>This calculator provides score estimates based on official SAT scoring guidelines. Actual scores may vary slightly. This tool is for informational purposes only and does not guarantee official SAT results. For the most accurate information, please consult the official College Board website.</p>
-                </div>
-                
                 <div class="footer-bottom">
                     <div class="copyright">
                         <p>&copy; 2024 SAT Score Calculator. All rights reserved.</p>
                     </div>
-                    
+
+                    <div class="footer-links">
+                        <a href="about.html"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; margin-right: 15px;">About
+                            Us</a>
+
+                        <a href="college/index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">All
+                            Colleges Directory</a>
+
+                    </div>
+
                     <div class="contact">
-                        <p>Questions or feedback? Contact us at: <a href="mailto:yubumian205@gmail.com">yubumian205@gmail.com</a></p>
+                        <p>Contact: <a href="mailto:yubumian205@gmail.com">yubumian205@gmail.com</a></p>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": "https://www.sat-score-calculator.net/#website",
-      "url": "https://www.sat-score-calculator.net/",
-      "name": "SAT Score Calculator & College Finder",
-      "description": "Convert SAT raw to scaled scores and find colleges by score, region, type, and admission rate.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "SAT Score Calculator",
-        "url": "https://www.sat-score-calculator.net/"
-      }
-    }
-    </script>
     <script src="script.js"></script>
-    <div style="display: none;">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YNBCGGYCCG"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-YNBCGGYCCG');
-</script>
-    </div>
 </body>
+
 </html>
