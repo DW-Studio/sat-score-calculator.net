@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAT Score Calculator & College Finder – Convert Raw to Scaled</title>
-    <meta name="description"
-        content="Accurately convert SAT raw scores to scaled scores (200–800; 400–1600 total) and get college recommendations by score, type, and admission rate.">
+    <meta name="description" content="Accurately convert SAT raw scores to scaled scores (200–800; 400–1600 total) and get college recommendations by score, type, and admission rate.">
     <link rel="canonical" href="https://www.sat-score-calculator.net/">
     <link rel="alternate" hreflang="en" href="https://www.sat-score-calculator.net/">
     <meta name="robots" content="index,follow">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="container">
         <header class="header">
@@ -25,23 +22,20 @@
             <section class="calculator-section">
                 <div class="calculator-card">
                     <h2 class="section-title">Enter Your Raw Scores</h2>
-                    <p class="section-description">Input your raw scores from the Reading & Writing and Math sections to
-                        get your scaled scores.</p>
-
+                    <p class="section-description">Input your raw scores from the Reading & Writing and Math sections to get your scaled scores.</p>
+                    
                     <form class="calculator-form" id="satCalculator">
                         <div class="input-group">
                             <label for="readingWritingScore" class="input-label">
                                 Reading & Writing Raw Score <span class="score-range">(0-52)</span>
                             </label>
-                            <input type="number" id="readingWritingScore" class="score-input" min="0" max="52"
-                                placeholder="Enter 0-52" required>
+                            <input type="number" id="readingWritingScore" class="score-input" min="0" max="52" placeholder="Enter 0-52" required>
                         </div>
                         <div class="input-group">
                             <label for="mathScore" class="input-label">
                                 Math Raw Score <span class="score-range">(0-58)</span>
                             </label>
-                            <input type="number" id="mathScore" class="score-input" min="0" max="58"
-                                placeholder="Enter 0-58" required>
+                            <input type="number" id="mathScore" class="score-input" min="0" max="58" placeholder="Enter 0-58" required>
                         </div>
                         <button type="submit" class="calculate-button">Calculate SAT Score</button>
                     </form>
@@ -66,24 +60,26 @@
                             <div class="score-range-text">Combined Score (400-1600)</div>
                         </div>
                     </div>
-
+                    
+                    <div class="score-breakdown">
+                        <h3>Score Breakdown</h3>
+                        <div class="breakdown-item">
+                            <span>Reading & Writing Raw:</span>
+                            <span id="rwRawScore">--</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Math Raw:</span>
+                            <span id="mathRawScore">--</span>
+                        </div>
+                    </div>
                     <div class="analysis-card" id="analysisSection" style="display: none;">
                         <h3>Score Analysis & Advice</h3>
                         <div class="analysis-header"><span id="levelBadge" class="badge">--</span></div>
                         <div class="analysis-grid">
-                            <div class="analysis-col">
-                                <h4>Reading & Writing Analysis</h4>
-                                <ul id="rwAnalysis"></ul>
-                            </div>
-                            <div class="analysis-col">
-                                <h4>Math Analysis</h4>
-                                <ul id="mathAnalysis"></ul>
-                            </div>
+                            <div class="analysis-col"><h4>Reading & Writing Analysis</h4><ul id="rwAnalysis"></ul></div>
+                            <div class="analysis-col"><h4>Math Analysis</h4><ul id="mathAnalysis"></ul></div>
                         </div>
-                        <div class="advice">
-                            <h4>Study Advice</h4>
-                            <ul id="adviceList"></ul>
-                        </div>
+                        <div class="advice"><h4>Study Advice</h4><ul id="adviceList"></ul></div>
                     </div>
 
                     <section class="schools-section" id="schoolsSection" style="display: none;">
@@ -95,8 +91,7 @@
                             <div class="filter-item score-control">
                                 <label for="schoolScoreInput">Total Score</label>
                                 <div class="score-inputs">
-                                    <input type="number" id="schoolScoreInput" min="400" max="1600" step="10"
-                                        placeholder="400-1600">
+                                    <input type="number" id="schoolScoreInput" min="400" max="1600" step="10" placeholder="400-1600">
                                     <input type="range" id="schoolScoreRange" min="400" max="1600" step="10">
                                     <span class="score-display" id="schoolScoreDisplay">--</span>
                                 </div>
@@ -138,17 +133,10 @@
                     <div class="copyright">
                         <p>&copy; 2024 SAT Score Calculator. All rights reserved.</p>
                     </div>
-
                     <div class="footer-links">
-                        <a href="about.html"
-                            style="color: rgba(255,255,255,0.7); text-decoration: none; margin-right: 15px;">About
-                            Us</a>
-
-                        <a href="college/index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">All
-                            Colleges Directory</a>
-
+                        <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin-right: 15px;">About Us</a>
+                        <a href="college/index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">All Colleges Directory</a>
                     </div>
-
                     <div class="contact">
                         <p>Contact: <a href="mailto:yubumian205@gmail.com">yubumian205@gmail.com</a></p>
                     </div>
@@ -158,5 +146,4 @@
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>
