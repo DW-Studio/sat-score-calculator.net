@@ -93,42 +93,59 @@ function getSlug(text) {
     return text.replace(/\s+/g, '-'); // Spaces to dashes
 }
 
-const SAT_CONVERSION_TABLES = {
+// === 修改 1: 替换旧的转换表 ===
+// Digital SAT 分数估算数据 (基于 Bluebook 自适应机制拟合)
+// 键: 做对题数, 值: [最低分, 最高分]
+const DIGITAL_SCORE_CHART = {
     readingWriting: {
-        0: 200, 1: 210, 2: 220, 3: 230, 4: 240, 5: 250, 6: 260, 7: 270, 8: 280, 9: 290,
-        10: 300, 11: 310, 12: 320, 13: 330, 14: 340, 15: 350, 16: 360, 17: 370, 18: 380, 19: 390,
-        20: 400, 21: 410, 22: 420, 23: 430, 24: 440, 25: 450, 26: 460, 27: 470, 28: 480, 29: 490,
-        30: 500, 31: 510, 32: 520, 33: 530, 34: 540, 35: 550, 36: 560, 37: 570, 38: 580, 39: 590,
-        40: 600, 41: 610, 42: 620, 43: 630, 44: 640, 45: 650, 46: 660, 47: 670, 48: 680, 49: 690,
-        50: 700, 51: 710, 52: 800
+        54: [800, 800], 53: [790, 800], 52: [770, 790], 51: [750, 770], 50: [740, 760],
+        49: [730, 750], 48: [720, 740], 47: [710, 730], 46: [700, 720], 45: [690, 710],
+        44: [680, 700], 43: [670, 690], 42: [660, 680], 41: [650, 670], 40: [640, 660],
+        39: [630, 650], 38: [620, 640], 37: [610, 630], 36: [600, 620], 35: [590, 610],
+        34: [580, 600], 33: [570, 590], 32: [560, 580], 31: [550, 570], 30: [540, 560],
+        29: [530, 550], 28: [520, 540], 27: [510, 530], 26: [500, 520], 25: [490, 510],
+        20: [440, 460], 15: [380, 410], 10: [320, 350], 5: [260, 290], 0: [200, 200]
     },
     math: {
-        0: 200, 1: 210, 2: 220, 3: 230, 4: 240, 5: 250, 6: 260, 7: 270, 8: 280, 9: 290,
-        10: 300, 11: 310, 12: 320, 13: 330, 14: 340, 15: 350, 16: 360, 17: 370, 18: 380, 19: 390,
-        20: 400, 21: 410, 22: 420, 23: 430, 24: 440, 25: 450, 26: 460, 27: 470, 28: 480, 29: 490,
-        30: 500, 31: 510, 32: 520, 33: 530, 34: 540, 35: 550, 36: 560, 37: 570, 38: 580, 39: 590,
-        40: 600, 41: 610, 42: 620, 43: 630, 44: 640, 45: 650, 46: 660, 47: 670, 48: 680, 49: 690,
-        50: 700, 51: 710, 52: 720, 53: 730, 54: 740, 55: 750, 56: 760, 57: 770, 58: 800
+        44: [800, 800], 43: [790, 800], 42: [780, 790], 41: [760, 780], 40: [750, 770],
+        39: [740, 760], 38: [730, 750], 37: [710, 730], 36: [700, 720], 35: [690, 710],
+        34: [680, 700], 33: [670, 690], 32: [660, 680], 31: [650, 670], 30: [640, 660],
+        29: [630, 650], 28: [620, 640], 27: [610, 630], 26: [600, 620], 25: [590, 610],
+        24: [580, 600], 23: [570, 590], 22: [560, 580], 21: [550, 570], 20: [540, 560],
+        15: [480, 500], 10: [400, 430], 5: [300, 330], 0: [200, 200]
     }
 };
 
-function convertRawToScaled(rawScore, section) {
-    const table = SAT_CONVERSION_TABLES[section];
-    if (section === 'readingWriting') {
-        rawScore = Math.max(0, Math.min(52, Math.round(rawScore)));
-    } else {
-        rawScore = Math.max(0, Math.min(58, Math.round(rawScore)));
+// === 修改 2: 新的计算逻辑 (返回范围) ===
+function getDigitalScoreRange(rawScore, section) {
+    // 确保输入在合法范围内
+    let maxQ = section === 'readingWriting' ? 54 : 44;
+    rawScore = Math.max(0, Math.min(maxQ, Math.round(rawScore)));
+
+    const chart = DIGITAL_SCORE_CHART[section];
+    
+    // 如果表中直接有这个分数
+    if (chart[rawScore]) {
+        return chart[rawScore];
     }
-    return table[rawScore] || 200;
+    
+    // 如果表中没有(比如做对12题)，进行简单的插值估算
+    // 这是一个简单的兜底逻辑
+    let estimatedScore = 200 + (rawScore / maxQ) * 600; 
+    estimatedScore = Math.round(estimatedScore / 10) * 10; // 取整到10位
+    return [Math.max(200, estimatedScore - 10), Math.min(800, estimatedScore + 10)];
 }
 
+// === 修改 3: 更新题目数量限制 ===
 function validateScores(rwScore, mathScore) {
     const errors = [];
-    if (isNaN(rwScore) || rwScore < 0 || rwScore > 52) {
-        errors.push('Reading & Writing score must be between 0 and 52');
+    // RW 上限改为 54
+    if (isNaN(rwScore) || rwScore < 0 || rwScore > 54) {
+        errors.push('Reading & Writing score must be between 0 and 54');
     }
-    if (isNaN(mathScore) || mathScore < 0 || mathScore > 58) {
-        errors.push('Math score must be between 0 and 58');
+    // Math 上限改为 44
+    if (isNaN(mathScore) || mathScore < 0 || mathScore > 44) {
+        errors.push('Math score must be between 0 and 44');
     }
     return { isValid: errors.length === 0, errors: errors };
 }
@@ -152,55 +169,80 @@ function displayErrors(errors) {
     }, 3000);
 }
 
+// === 修改 4: 处理范围显示 ===
 function displayResults(scores) {
     const resultsSection = document.getElementById('resultsSection');
     resultsSection.style.display = 'block';
     
-    // Update Scaled Scores
-    document.getElementById('rwScaledScore').textContent = scores.rwScaled;
-    document.getElementById('mathScaledScore').textContent = scores.mathScaled;
-    document.getElementById('totalScore').textContent = scores.total;
+    // 更新显示 (显示范围字符串, 例如 "720-740")
+    document.getElementById('rwScaledScore').textContent = scores.rwDisplay;
+    document.getElementById('mathScaledScore').textContent = scores.mathDisplay;
+    document.getElementById('totalScore').textContent = scores.totalDisplay;
 
-    // Update Raw Scores (Corrected part)
+    // 更新原始分
     document.getElementById('rwRawScore').textContent = scores.rwRaw;
     document.getElementById('mathRawScore').textContent = scores.mathRaw;
 
     resultsSection.classList.add('fade-in');
     
     try {
+        // 分析部分使用平均分 (scores.totalAvg) 来判断等级
         const analysis = generateAnalysis({
-            rwScaled: scores.rwScaled,
-            mathScaled: scores.mathScaled,
-            total: scores.total
+            rwScaled: scores.rwAvg,
+            mathScaled: scores.mathAvg,
+            total: scores.totalAvg
         });
         renderAnalysis(analysis);
     } catch (e) {
-        const section = document.getElementById('analysisSection');
-        if (section) section.style.display = 'none';
+        console.error(e);
     }
     resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    showSchoolsWithScore(scores.total);
+    
+    // 大学推荐部分使用平均分进行过滤
+    showSchoolsWithScore(scores.totalAvg);
 }
 
+// === 修改 5: 处理提交逻辑 ===
 function handleSubmit(event) {
     event.preventDefault();
     const rwRawScore = parseInt(document.getElementById('readingWritingScore').value);
     const mathRawScore = parseInt(document.getElementById('mathScore').value);
+    
     const validation = validateScores(rwRawScore, mathRawScore);
     if (!validation.isValid) {
         displayErrors(validation.errors);
         return;
     }
-    const rwScaledScore = convertRawToScaled(rwRawScore, 'readingWriting');
-    const mathScaledScore = convertRawToScaled(mathRawScore, 'math');
-    const totalScore = rwScaledScore + mathScaledScore;
+
+    // 获取范围 [min, max]
+    const rwRange = getDigitalScoreRange(rwRawScore, 'readingWriting');
+    const mathRange = getDigitalScoreRange(mathRawScore, 'math');
+
+    // 计算总分范围
+    const totalMin = rwRange[0] + mathRange[0];
+    const totalMax = rwRange[1] + mathRange[1];
+
+    // 计算用于内部逻辑(大学匹配)的平均分
+    const rwAvg = Math.round((rwRange[0] + rwRange[1]) / 2);
+    const mathAvg = Math.round((mathRange[0] + mathRange[1]) / 2);
+    const totalAvg = Math.round((totalMin + totalMax) / 2);
+
+    // 格式化显示文本
+    const formatRange = (range) => range[0] === range[1] ? `${range[0]}` : `${range[0]}-${range[1]}`;
+
     const results = {
         rwRaw: rwRawScore,
         mathRaw: mathRawScore,
-        rwScaled: rwScaledScore,
-        mathScaled: mathScaledScore,
-        total: totalScore
+        // 用于显示的字符串
+        rwDisplay: formatRange(rwRange),
+        mathDisplay: formatRange(mathRange),
+        totalDisplay: formatRange([totalMin, totalMax]),
+        // 用于逻辑计算的数值
+        rwAvg: rwAvg,
+        mathAvg: mathAvg,
+        totalAvg: totalAvg
     };
+    
     displayResults(results);
 }
 
@@ -229,30 +271,77 @@ function initializeCalculator() {
 
 document.addEventListener('DOMContentLoaded', initializeCalculator);
 
+// === 修改 script.js 中的 generateAnalysis 函数内容 ===
+
 function generateAnalysis(scores) {
+    // 等级判断逻辑不变
     const level = scores.total < 900 ? 'basic' : scores.total < 1200 ? 'advanced' : scores.total < 1400 ? 'intensive' : 'elite';
     const levelText = { basic: 'Basic', advanced: 'Advanced', intensive: 'Intensive', elite: 'Elite' }[level];
+    
+    // 注意：这里的判断逻辑使用传入的平均分 (scaled score)
     const rwBand = scores.rwScaled < 450 ? 'basic' : scores.rwScaled < 600 ? 'advanced' : scores.rwScaled < 700 ? 'intensive' : 'elite';
     const mathBand = scores.mathScaled < 450 ? 'basic' : scores.mathScaled < 600 ? 'advanced' : scores.mathScaled < 700 ? 'intensive' : 'elite';
 
+    // === 1. 更新阅读写作建议 (针对机考短文章、逻辑推理) ===
     const rwMap = {
-        basic: ['Common misses: vocabulary, syntax basics', 'Start with literal locating questions'],
-        advanced: ['Key gaps: long-sentence parsing', 'Rhetoric/logic consistency check'],
-        intensive: ['Time management: easy-first', 'Beware synonym traps'],
-        elite: ['Style consistency and grammar edge cases', 'Tiny differences decide winners']
+        basic: [
+            'Focus on "Standard English Conventions" (Grammar is the easiest way to gain points).',
+            'Practice identifying the "Main Idea" in short paragraphs.'
+        ],
+        advanced: [
+            'Work on "Words in Context" - focus on secondary meanings of common words.',
+            'Improve speed on "Transitions" questions (However, Therefore, Furthermore).'
+        ],
+        intensive: [
+            'Master "Command of Evidence" (Quantitative) - reading charts/graphs quickly.',
+            'Drill "Rhetorical Synthesis" questions (combining notes into sentences).'
+        ],
+        elite: [
+            'Perfect "Inferences" questions (the hardest logical reasoning type).',
+            'Eliminate "plausible but wrong" detractors in Cross-Text Connections.'
+        ]
     };
+
+    // === 2. 更新数学建议 (针对全程 Desmos 计算器) ===
     const mathMap = {
-        basic: ['Gaps in algebra basics', 'Equation workflow: define variables'],
-        advanced: ['Build templates for quadratics', 'Probability/statistics basics'],
-        intensive: ['High ROI: function graphs/transformations', 'Break multi-step applications'],
-        elite: ['Set monotonicity/symmetry first', 'Use estimation and bounds']
+        basic: [
+            'Learn to use the built-in Desmos Calculator for Systems of Equations.',
+            'Review basic Linear Equations (y = mx + b) and substitution.'
+        ],
+        advanced: [
+            'Master "Quadratics" - finding roots/vertex using Desmos visually.',
+            'Practice "Probability and Statistics" (Mean, Median, Mode, Range).'
+        ],
+        intensive: [
+            'Focus on "Advanced Math" - Exponential growth/decay and nonlinear functions.',
+            'Drill "Geometry and Trigonometry" (Circle equations, SOH CAH TOA).'
+        ],
+        elite: [
+            'Solve "Constant/No Solution" problems instantly without calculation.',
+            'Master complex function transformations and creating models from data.'
+        ]
     };
+
+    // === 3. 更新通用备考策略 (针对自适应机制) ===
     const adviceByLevel = {
-        basic: ['Maintain an error log', '30–45 mins daily practice'],
-        advanced: ['Refine an “often wrong” list', 'Speed up chart reading'],
-        intensive: ['Full timed test every 2 days', 'Target 2–3 weak points'],
-        elite: ['Hunt the last 30–50 points', 'Stabilize schedule']
+        basic: [
+            'Don\'t leave any blanks (no penalty for guessing).',
+            'Focus on Module 1 accuracy to avoid falling into the "Easy" Module 2.'
+        ],
+        advanced: [
+            'Master the Desmos calculator shortcuts to save time for hard questions.',
+            'Prioritize "Grammar" and "Algebra" for the highest ROI.'
+        ],
+        intensive: [
+            'Take official Bluebook practice tests to adapt to the screen fatigue.',
+            'Focus on identifying question types instantly to save reading time.'
+        ],
+        elite: [
+            'Careless errors in Module 1 are costly - verify every easy question.',
+            'Practice with "Hard Module" specific question banks.'
+        ]
     };
+
     return { level, levelText, rw: rwMap[rwBand], math: mathMap[mathBand], advice: adviceByLevel[level] };
 }
 
@@ -292,11 +381,22 @@ function filterSchools(params) {
 
 function rankSchools(total, list) {
     const order = { fit: 0, safety: 1, reach: 2 };
-    function classify(totalScore, s) {
-        if (totalScore >= s.sat25 && totalScore <= s.sat75) return 'fit';
-        if (totalScore > s.sat75) return 'safety';
-        return 'reach';
+// === 修改 script.js 中的 classify 函数 ===
+
+function classify(totalScore, s) {
+    // 针对超级名校 (录取率 < 10%) 的特殊处理：
+    // 只有分数非常高才算 Fit，否则容易给学生误导
+    if (s.admitRate < 10) {
+        if (totalScore >= s.sat75) return 'fit'; // 对于哈佛耶鲁，达到75%分位才算Fit
+        if (totalScore >= s.sat25) return 'reach'; // 即使在区间内，也算Reach
+        return 'reach'; // 低于区间更是Reach
     }
+
+    // 普通学校逻辑保持不变
+    if (totalScore >= s.sat25 && totalScore <= s.sat75) return 'fit';
+    if (totalScore > s.sat75) return 'safety';
+    return 'reach';
+}
     function recommendScore(totalScore, s) {
         const dist = scoreDistance(totalScore, s);
         const closeness = 1 / (1 + dist / 100);
@@ -334,7 +434,7 @@ function renderSchools(list, append=false) {
         
         card.innerHTML = `
             <div class="school-header">
-                <a href="college/${slug}/" class="school-name">${s.name}</a>
+                <a href="college/${slug}/index.html" class="school-name">${s.name}</a>
                 <span class="chip ${s.type.toLowerCase()}">${s.type}</span>
                 <span class="chip tag ${tag}">${tagLabel}</span>
             </div>
@@ -344,7 +444,7 @@ function renderSchools(list, append=false) {
                 <span class="stat">Admit ${s.admitRate}%</span>
             </div>
             <div class="school-actions">
-                <a href="college/${slug}/" class="btn-link">View Analysis</a>
+                <a href="college/${slug}/index.html" class="btn-link">View Analysis</a>
             </div>
         `;
         frag.appendChild(card);

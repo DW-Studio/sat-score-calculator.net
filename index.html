@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAT Score Calculator & College Finder – Convert Raw to Scaled</title>
-    <meta name="description" content="Accurately convert SAT raw scores to scaled scores (200–800; 400–1600 total) and get college recommendations by score, type, and admission rate.">
+    <meta name="description"
+        content="Accurately convert SAT raw scores to scaled scores (200–800; 400–1600 total) and get college recommendations by score, type, and admission rate.">
     <link rel="canonical" href="https://www.sat-score-calculator.net/">
     <link rel="alternate" hreflang="en" href="https://www.sat-score-calculator.net/">
     <meta name="robots" content="index,follow">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -22,20 +25,23 @@
             <section class="calculator-section">
                 <div class="calculator-card">
                     <h2 class="section-title">Enter Your Raw Scores</h2>
-                    <p class="section-description">Input your raw scores from the Reading & Writing and Math sections to get your scaled scores.</p>
-                    
+                    <p class="section-description">Input your raw scores from the Reading & Writing and Math sections to
+                        get your scaled scores.</p>
+
                     <form class="calculator-form" id="satCalculator">
                         <div class="input-group">
                             <label for="readingWritingScore" class="input-label">
-                                Reading & Writing Raw Score <span class="score-range">(0-52)</span>
+                                Reading & Writing Raw Score <span class="score-range">(0-54)</span>
                             </label>
-                            <input type="number" id="readingWritingScore" class="score-input" min="0" max="52" placeholder="Enter 0-52" required>
+                            <input type="number" id="readingWritingScore" class="score-input" min="0" max="54"
+                                placeholder="Enter 0-54" required>
                         </div>
                         <div class="input-group">
                             <label for="mathScore" class="input-label">
-                                Math Raw Score <span class="score-range">(0-58)</span>
+                                Math Raw Score <span class="score-range">(0-44)</span>
                             </label>
-                            <input type="number" id="mathScore" class="score-input" min="0" max="58" placeholder="Enter 0-58" required>
+                            <input type="number" id="mathScore" class="score-input" min="0" max="44"
+                                placeholder="Enter 0-44" required>
                         </div>
                         <button type="submit" class="calculate-button">Calculate SAT Score</button>
                     </form>
@@ -60,7 +66,7 @@
                             <div class="score-range-text">Combined Score (400-1600)</div>
                         </div>
                     </div>
-                    
+
                     <div class="score-breakdown">
                         <h3>Score Breakdown</h3>
                         <div class="breakdown-item">
@@ -76,12 +82,53 @@
                         <h3>Score Analysis & Advice</h3>
                         <div class="analysis-header"><span id="levelBadge" class="badge">--</span></div>
                         <div class="analysis-grid">
-                            <div class="analysis-col"><h4>Reading & Writing Analysis</h4><ul id="rwAnalysis"></ul></div>
-                            <div class="analysis-col"><h4>Math Analysis</h4><ul id="mathAnalysis"></ul></div>
+                            <div class="analysis-col">
+                                <h4>Reading & Writing Analysis</h4>
+                                <ul id="rwAnalysis"></ul>
+                            </div>
+                            <div class="analysis-col">
+                                <h4>Math Analysis</h4>
+                                <ul id="mathAnalysis"></ul>
+                            </div>
                         </div>
-                        <div class="advice"><h4>Study Advice</h4><ul id="adviceList"></ul></div>
+                        <div class="advice">
+                            <h4>Study Advice</h4>
+                            <ul id="adviceList"></ul>
+                        </div>
                     </div>
+                    <div class="resource-card"
+                        style="margin-top: 2rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <span
+                                style="background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">#1
+                                Best Seller</span>
+                            <h3 style="margin: 0.5rem 0 0 0; font-size: 1.25rem; color: #0f172a;">Ultimate Digital SAT
+                                Study Guide</h3>
+                        </div>
 
+                        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                            <div style="font-size: 3rem; line-height: 1; flex-shrink: 0;">📘</div>
+
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; font-size: 1rem; color: #334155; line-height: 1.4;">SAT
+                                    Exam Prep: The Complete & Exam Aligned Study Guide (2025-2026)</h4>
+                                <ul
+                                    style="margin: 0 0 1rem 1.2rem; padding: 0; color: #64748b; font-size: 0.9rem; list-style-type: disc;">
+                                    <li><strong>Massive Practice:</strong> 30+ full-length tests & 3,500+ questions</li>
+                                    <li><strong>Digital Focus:</strong> Exclusive Bluebook™ interface walk-through</li>
+                                    <li><strong>Flexible Plans:</strong> Schedules ranging from 4 months to 7 days</li>
+                                </ul>
+
+                                <a href="https://amzn.to/4s2fN2o" target="_blank" rel="nofollow noopener"
+                                    style="display: inline-block; background-color: #FF9900; color: #111; font-weight: bold; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                                    Check Price on Amazon &rarr;
+                                </a>
+                                <div style="margin-top: 8px; font-size: 0.75rem; color: #94a3b8;">
+                                    As an Amazon Associate, we earn from qualifying purchases.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <section class="schools-section" id="schoolsSection" style="display: none;">
                         <div class="schools-header">
                             <h3>College Finder & Recommendations</h3>
@@ -91,7 +138,8 @@
                             <div class="filter-item score-control">
                                 <label for="schoolScoreInput">Total Score</label>
                                 <div class="score-inputs">
-                                    <input type="number" id="schoolScoreInput" min="400" max="1600" step="10" placeholder="400-1600">
+                                    <input type="number" id="schoolScoreInput" min="400" max="1600" step="10"
+                                        placeholder="400-1600">
                                     <input type="range" id="schoolScoreRange" min="400" max="1600" step="10">
                                     <span class="score-display" id="schoolScoreDisplay">--</span>
                                 </div>
@@ -124,6 +172,14 @@
                         </div>
                     </section>
                 </div>
+                <div
+                    style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 15px; margin: 20px 0; border-radius: 4px; font-size: 0.9em; color: #334155;">
+                    <strong>Note on Digital SAT Scoring:</strong><br>
+                    The new Digital SAT uses a <strong>multistage adaptive model</strong>. The difficulty of your second
+                    module depends on your performance in the first one. Therefore, exact scores cannot be calculated
+                    solely based on the number of correct answers. This tool provides a high-confidence <strong>estimate
+                        range</strong>.
+                </div>
             </section>
         </main>
 
@@ -131,11 +187,14 @@
             <div class="footer-content">
                 <div class="footer-bottom">
                     <div class="copyright">
-                        <p>&copy; 2024 SAT Score Calculator. All rights reserved.</p>
+                        <p>&copy; 2025 SAT Score Calculator. All rights reserved.</p>
                     </div>
                     <div class="footer-links">
-                        <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin-right: 15px;">About Us</a>
-                        <a href="college/index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">All Colleges Directory</a>
+                        <a href="about.html"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; margin-right: 15px;">About
+                            Us</a>
+                        <a href="college/index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">All
+                            Colleges Directory</a>
                     </div>
                     <div class="contact">
                         <p>Contact: <a href="mailto:yubumian205@gmail.com">yubumian205@gmail.com</a></p>
@@ -146,4 +205,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
